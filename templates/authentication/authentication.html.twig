@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+		<title>
+			{% block title %}{% endblock %}
+		</title>
+		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
+
+		{% block stylesheets %}
+			<link rel="stylesheet" href="{{ asset('assets/css/registration.css')}}">
+			<link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"/>
+		{% endblock %}
+
+	</head>
+	<body >
+
+		{% block body %}
+
+
+			<!-- Home -->
+			<section class="home">
+				<div class="form_container">
+					{# <i class="uil uil-times form_close"></i> #}
+					<!-- Login From -->
+					<div class="form login_form">
+						<form method="post" action="#">
+
+							<h2>Login</h2>
+
+							<div class="input_box">
+								<input type="email" value="{{ last_username }}" name="email" id="inputEmail" placeholder="Enter your email" autocomplete="email" required/>
+								<i class="uil uil-envelope-alt email"></i>
+							</div>
+							<div class="input_box">
+								<input type="password" name="password" id="inputPassword" placeholder="Enter your password" autocomplete="current-password" required/>
+								<i class="uil uil-lock password"></i>
+								<i class="uil uil-eye-slash pw_hide"></i>
+							</div>
+							{% if error %}
+								<div class="text-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+							{% endif %}
+							{# <div class="option_field">
+								<span class="checkbox">
+									<input type="checkbox" id="check"/>
+									<label for="check">Remember me</label>
+								</span>
+								<a href="#" class="forgot_pw">Forgot password?</a>
+							</div> #}
+							<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+							<button class="button" type="submit">Login Now</button>
+
+							<div class="login_signup">Don't have an account?
+								<a href="#" id="signup">Signup</a>
+							</div>
+						</form>
+					</div>
+
+					<!-- Signup From -->
+					<div class="form signup_form">
+						<form id="register" method="post" action="/register">
+							<h2>Signup</h2>
+							<div class="input_box">
+								<input type="text" name="name" id="name" placeholder="Enter your Name" required/>
+								<i class="uil uil-user user"></i>
+								<small id="namecheck" class="text-danger"></small>
+							</div>
+							<div class="input_box">
+								<input type="text" name="lastname" id="lastname" placeholder="Enter your Lastname" required/>
+								<i class="uil uil-user user"></i>
+								<small id="lastnamecheck" class="text-danger"></small>
+							</div>
+							<div class="input_box">
+								<input type="email" id="email" name="email" placeholder="Enter your email" required/>
+								<i class="uil uil-envelope-alt email"></i>
+								<small id="emailcheck" class="text-danger "></small>
+							</div>
+							<div class="input_box">
+								<input type="password" id="password" name="password" placeholder="Create password" required/>
+								<i class="uil uil-lock password"></i>
+								<i class="uil uil-eye-slash pw_hide"></i>
+								<small id="passcheck" class="text-danger "></small>
+							</div>
+							<div class="input_box">
+								<input id="password_confirmation" type="password" placeholder="Confirm password" required/>
+								<i class="uil uil-lock password"></i>
+								<i class="uil uil-eye-slash pw_hide"></i>
+								<small id="conpasscheck" class="text-danger "></small>
+							</div>
+							<input type="hidden" name="_csrf_token" value="{{ csrf_token('register') }}">
+							<button type="submit" id="submit-register" class="button">Signup</button>
+
+							<div class="login_signup">Already have an account?
+								<a id="login">Login</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</section>
+
+		{% endblock %}
+		{% block footer %}
+			{% block javascripts %}
+				<script src="{{ asset('assets/js/jquery.3.2.1.min.js')}}" type="text/javascript"></script>
+				<script src="{{ asset('assets/js/registration.js')}}" type="text/javascript"></script>
+			{% endblock %}
+		{% endblock %}
+	</body>
+</html>

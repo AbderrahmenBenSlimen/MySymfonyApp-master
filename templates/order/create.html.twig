@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+
+	<div class="content">
+		<div class="container-fluid">
+			<form id="validateOrder" action="/order/store" method="post">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="header">
+								<h4 class="title">Passer des commandes</h4>
+							</div>
+							<div class="content table-responsive table-full-width">
+								<table class="table table-hover ">
+									<thead>
+										<th>Fournisseur</th>
+										<th>Produit</th>
+										<th>Quantié</th>
+										<th>Prix</th>
+									</thead>
+
+									<tbody class="loopOver">
+
+										{% set numbers = range (1, 5) %}
+										{% for number in numbers %}
+											<tr>
+												<td class="col-md-3">
+													<div class="form-group" data-item="provider" data-id="{{number}}">
+														<div class="select-box provider-select-box-{{number}}">
+															<div class="options-container provider-options-container-{{number}}"></div>
+															<div class="selected provider-selected-{{number}}"></div>
+															<div class="search-box provider-search-box-{{number}}">
+																<input type="text" class="form-control" placeholder="Nom de fournisseur..."/>
+															</div>
+														</div>
+														
+													</div>
+												</td>
+												<td class="col-md-3">
+													<div class="form-group" data-item="product" data-id="{{number}}">
+														<div class="select-box product-select-box-{{number}}">
+															<div class="options-container product-options-container-{{number}}"></div>
+															<div class="selected product-selected-{{number}}"></div>
+															<div class="search-box product-search-box-{{number}}">
+																<input type="text" class="form-control" placeholder="Nom de produit..."/>
+															</div>
+														</div>
+														
+													</div>
+												</td>
+												<td class="col-md-3">
+													<div class="form-group">
+														<input type="text" id="quantity_{{number}}" class="form-control" name="quantity_{{number}}" placeholder="Quantité"/>
+														
+													</div>
+												</td>
+												<td class="col-md-3">
+													<div class="form-group">
+														<input type="text" id="total_{{number}}" class="form-control" name="total_{{number}}" placeholder="Prix total"/>
+														
+													</div>
+												</td>
+											</tr>
+										{% endfor %}
+
+
+									</tbody>
+
+								</table>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+				<div class="footer pull-right">
+					<button type="submit" id="ordersSubmit" class="btn btn-info btn-fill pull-right">Commandez maintenant
+						<i class="pe-7s-cart"></i>
+					</button>
+				</div>
+			</form>
+			<div class="row ajaxTab"> </div>
+
+		{% endblock %}

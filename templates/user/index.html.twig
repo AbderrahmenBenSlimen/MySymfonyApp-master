@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+	<div class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card ">
+						<div class="header">
+							<h4 class="title">Liste des utilisateurs</h4>
+							<a href="/admin/user/create" class="btn btn-info btn-fill pull-right">Ajouter un utilisateur
+								<i class="pe-7s-add-user"></i>
+							</a>
+						</div>
+						<div class="content table-responsive table-full-width">
+							<table class="table table-hover">
+								<thead>
+									<th>Nom</th>
+									<th>Prénom</th>
+									<th>Email</th>
+									<th>Activé</th>
+									<th>Supprimé</th>
+									<th>Droit</th>
+									<th>Actions</th>
+								</thead>
+
+								<tbody>
+									{% for user in users %}
+										<tr>
+											<td>{{ user.name }}</td>
+											<td>{{ user.lastname }}</td>
+											<td>{{ user.email }}</td>
+											{% if user.attributes['activated']  %}
+												<td>
+													<label class="toggle">
+														<input class="toggle-checkbox active-btn"  data-id="{{ user.id }}" name="activated" type="checkbox" checked>
+														<div class="toggle-switch"></div>
+													</label>
+												</td>
+											{% else %}
+												<td>
+													<label class="toggle">
+														<input class="toggle-checkbox active-btn" data-id="{{ user.id }}" name="activated" type="checkbox">
+														<div class="toggle-switch"></div>
+													</label>
+												</td>
+											{% endif %}
+											{% if user.attributes['deleted'] %}
+												<td>{{ user.attributes['deleted']  |date("m/d/Y") }}</td>
+											{% else %}
+												<td id="deleted_date_{{ user.id }}"></td>
+											{% endif %}
+											{% for role in user.getRoles() %}
+												{% if role == 'ROLE_'~ constant('App\\Entity\\User::users_roles')['admin'] %}
+													<td>
+														Administrateur
+													</td>
+												{% else %}
+													<td>
+														Utilisateur
+													</td>
+												{% endif %}
+											{% endfor %}
+
+											<td class="td-actions">
+												<a href="/admin/user/{{user.id}}/edit" type="button" rel="tooltip" title="Modifier l'utilisateur" class="btn btn-info btn-simple btn-xs">
+													<i class="fa fa-edit"></i>
+												</a>
+												{% if  user.attributes['deleted'] is null %}
+													<a id="deleted_a_{{ user.id }}" type="button" data-id="{{ user.id }}" title="Supprimer" class="btn btn-danger btn-simple btn-xs deleted_btn">
+														<i class="fa fa-times"></i>
+													</a>
+
+
+												{% endif %}
+
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+
+							</table>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		{% endblock %}

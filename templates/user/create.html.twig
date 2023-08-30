@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+	<div class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="header">
+							<h4 class="title">Ajouter un utilisateur</h4>
+						</div>
+						<div class="content">
+							<form id="validateForm" method="post" action="/admin/user/store">
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="name">Nom</label>
+											<input type="text" id="name" class="form-control" name="name" placeholder="Nom">
+											<small id="namecheck" class="text-danger"></small>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="lastname">Prénom</label>
+											<input type="text" id="lastname" class="form-control" name="lastname" placeholder="Prénom">
+											<small id="lastnamecheck" class="text-danger"></small>
+										</div>
+									</div>
+									<div class="col-md-4 " style="margin-top: 25px">
+										<div class="form-group">
+											<select name="role" class="form-select btn dropdown-toggle " id="role" aria-label="Default select example">
+												<option value="" disabled selected hidden>Rôle d'utilisateur</option>
+												<option value="{{ constant('App\\Entity\\User::users_roles')['admin'] }}">{{ constant('App\\Entity\\User::users_roles')['admin'] }}</option>
+												<option value="{{ constant('App\\Entity\\User::users_roles')['user'] }}">{{ constant('App\\Entity\\User::users_roles')['user'] }}</option>
+
+											</select>
+											<br>
+											<small id="rolecheck" class="text-danger"></small>
+										</div>
+
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="email">ADRESSE E-MAIL</label>
+											<input type="email" id="email" name="email" class="form-control" placeholder="E-mail">
+											<small id="emailcheck" class="text-danger "></small>
+
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="password">Mot de passe</label>
+											<input type="password" id="password" name="password" class="form-control" placeholder="Mot de passe">
+											<small id="passcheck" class="text-danger "></small>
+										</div>
+									</div>
+
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="password_confirmation">Confirmer mot de passe</label>
+											<input type="password" id="password_confirmation" class="form-control" name="password_confirmation" placeholder="Confirmer mot de passe">
+											<small id="conpasscheck" class="text-danger "></small>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<label class="toggle">
+											<span for"active" class="toggle-label">Activé</span>
+											<input class="toggle-checkbox" id="active" name="activated" type="checkbox">
+											<div class="toggle-switch"></div>
+
+										</label>
+									</div>
+								</div>
+								<button type="submit" id="submit" class="btn btn-info btn-fill pull-right">Ajouter</button>
+								<div class="clearfix"></div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		{% endblock %}

@@ -1,0 +1,159 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+	<div class="content">
+		<div class="container-fluid">
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card ">
+						<div class="header">
+
+							<h4 class="title">Détails Commande
+							</h4>
+							<a href="/order" class="btn btn-info btn-fill pull-right">Retour
+								<i class="pe-7s-back"></i>
+							</a>
+						</div>
+
+
+						<div class="content table-responsive table-full-width">
+							<table class="table table-hover">
+								<thead>
+									<th>Fournisseur</th>
+									<th>Produit</th>
+									<th>Quantité</th>
+									<th>Prix unitaire</th>
+									<th>Total</th>
+								</thead>
+
+								<tbody>
+									{% set providerName = "" %}
+									{% set total = 0 %}
+									{% for orderDetail in order.orderDetails %}
+										{% if loop.last %}
+											{% if providerName != orderDetail.product.getProvider().name %}
+												{% if not loop.first %}
+													<tr>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td></td>
+														<td>{{total}}</td>
+													</tr>
+													{% set total = 0 %}
+												{% endif %}
+												<tr>
+													<td>{{orderDetail.product.getProvider().name}}</td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td></td>
+													<td>{{ orderDetail.product.getName() }}</td>
+													<td>x{{ orderDetail.quantity }}</td>
+													<td>{{ orderDetail.unitprice }}</td>
+													<td>{{ orderDetail.quantity * orderDetail.unitprice }}</td>
+												</tr>
+
+
+											{% else %}
+
+												<tr>
+													<td></td>
+													<td>{{ orderDetail.product.getName() }}</td>
+													<td>x{{ orderDetail.quantity }}</td>
+													<td>{{ orderDetail.unitprice }}</td>
+													<td>{{ orderDetail.quantity * orderDetail.unitprice }}</td>
+												</tr>
+											{% endif %}
+											{% set total = total + orderDetail.quantity * orderDetail.unitprice  %}
+											<tr>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td>{{total}}</td>
+											</tr>
+										{% elseif loop.first %}
+											{% set providerName = orderDetail.product.getProvider().name %}
+
+											<tr>
+												<td>{{orderDetail.product.getProvider().name}}</td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td>{{ orderDetail.product.getName() }}</td>
+												<td>x{{ orderDetail.quantity }}</td>
+												<td>{{ orderDetail.unitprice }}</td>
+												<td>{{ orderDetail.quantity * orderDetail.unitprice }}</td>
+											</tr>
+											{% set total = total + orderDetail.quantity * orderDetail.unitprice  %}
+										{% elseif orderDetail.product.getProvider().name != providerName %}
+											<tr>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td>{{total}}</td>
+											</tr>
+											<tr>
+
+												<td>{{orderDetail.product.getProvider().name}}</td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td>{{ orderDetail.product.getName() }}</td>
+												<td>x{{ orderDetail.quantity }}</td>
+												<td>{{ orderDetail.unitprice }}</td>
+												<td>{{ orderDetail.quantity * orderDetail.unitprice }}</td>
+											</tr>
+
+											{% set total = total + orderDetail.quantity * orderDetail.unitprice  %}
+
+											{% set total = 0 %}
+											{% set providerName = orderDetail.product.getProvider().name %}
+										{% else %}
+											<tr>
+												<td></td>
+												<td>{{ orderDetail.product.getName() }}</td>
+												<td>x{{ orderDetail.quantity }}</td>
+												<td>{{ orderDetail.unitprice }}</td>
+												<td>{{ orderDetail.quantity * orderDetail.unitprice }}</td>
+											</tr>
+											{% set total = total + orderDetail.quantity * orderDetail.unitprice  %}
+										{% endif %}
+
+									{% endfor %}
+									<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td>{{order.total}}</td>
+
+									</tr>
+								</tbody>
+							</tbody>
+						</table>
+
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+
+	{% endblock %}

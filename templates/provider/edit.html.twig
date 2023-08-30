@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+	<div class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="header">
+							<h4 class="title">Mise à jour fournisseur</h4>
+						</div>
+						<div class="content">
+							<form method="post" id="validateProvider" action="/admin/provider/{{provider.id}}/update">
+								<input type="hidden" name="_method" value="PATCH">
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="provider_name">Nom</label>
+											<input type="text" id="provider_name" class="form-control" name="name" placeholder="{{provider.name}}">
+											<small id="providerNamecheck" class="text-danger"></small>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<label class="toggle">
+											{% if provider.activated is not null %}
+												<span for"active" class="toggle-label">Activé</span>
+												<input class="toggle-checkbox" id="active" name="activated" type="checkbox" checked>
+												<div class="toggle-switch"></div>
+											{% else %}
+												<span for"active" class="toggle-label">Activé</span>
+												<input class="toggle-checkbox" id="active" name="activated" type="checkbox">
+												<div class="toggle-switch"></div>
+											{% endif %}
+
+										</label>
+									</div>
+								</div>
+								<button type="submit" id="submit" class="btn btn-info btn-fill pull-right">Mise à jour</button>
+								<div class="clearfix"></div>
+							</form>
+						</div>
+					</div>
+				</div>
+		</div>
+
+	{% endblock %}

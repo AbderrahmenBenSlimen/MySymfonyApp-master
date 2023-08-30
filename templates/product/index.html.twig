@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+	<div class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card ">
+						<div class="header">
+							<h4 class="title">Liste des produits</h4>
+							<a href="/admin/product/create" class="btn btn-info btn-fill pull-right">Ajouter un produit
+								<i class="pe-7s-plus"></i>
+							</a>
+						</div>
+						<div class="content table-responsive table-full-width">
+							<table class="table table-hover">
+								<thead>
+									<th>Nom</th>
+									<th>Fournisseur</th>
+									<th>Prix Unitaire</th>
+									<th>Activé</th>
+									<th>Supprimé</th>
+									<th>Actions</th>
+								</thead>
+
+								<tbody>
+									{% for product in pagination %}
+										<tr>
+											<td>{{ product.name }}</td>
+											<td>{{ product.provider.name }}</td>
+											<td>{{ product.unitPrice }}</td>
+											{% if product.activated %}
+												<td>
+													<label class="toggle">
+														<input class="toggle-checkbox active-btn"  data-id="{{ product.id }}" name="activated" type="checkbox" checked>
+														<div class="toggle-switch"></div>
+													</label>
+												</td>
+											{% else %}
+												<td>
+													<label class="toggle">
+														<input class="toggle-checkbox active-btn" data-id="{{ product.id }}" name="activated" type="checkbox">
+														<div class="toggle-switch"></div>
+													</label>
+												</td>
+											{% endif %}
+											{% if product.deleted %}
+												<td>{{ product.deleted |date("m/d/Y") }}</td>
+											{% else %}
+												<td id="deleted_date_{{ product.id }}"></td>
+											{% endif %}
+											
+
+											<td class="td-actions">
+												<a href="/admin/product/{{product.id}}/edit" type="button" rel="tooltip" title="Modifier" class="btn btn-info btn-simple btn-xs">
+													<i class="fa fa-edit"></i>
+												</a>
+												{% if  product.deleted is null %}
+													<a id="deleted_a_{{ product.id }}" type="button" data-id="{{ product.id }}" title="Supprimer" class="btn btn-danger btn-simple btn-xs deleted_btn">
+														<i class="fa fa-times"></i>
+													</a>
+
+
+												{% endif %}
+
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+
+							</table>
+
+						</div>
+					</div>
+				</div>
+			</div>
+<nav aria-label="Page navigation example">
+				{{ knp_pagination_render(pagination) }}
+			</nav>
+		{% endblock %}

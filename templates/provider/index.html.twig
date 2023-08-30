@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+	<div class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="header">
+							<h4 class="title">Liste des fournisseurs</h4>
+							<a href="/admin/provider/create" class="btn btn-info btn-fill pull-right">Ajouter un fournisseur
+								<i class="pe-7s-add-user"></i>
+							</a>
+						</div>
+						<div class="content table-responsive table-full-width">
+							<table class="table table-hover">
+								<thead>
+									<th>Nom</th>
+									<th>Activé</th>
+									<th>Supprimé</th>
+									<th>Actions</th>
+								</thead>
+
+								<tbody>
+									{% for provider in providers %}
+										<tr>
+											<td>{{ provider.name }}</td>
+											{% if provider.activated %}
+												<td>
+													<label class="toggle">
+														<input class="toggle-checkbox active-btn"  data-id="{{ provider.id }}" name="activated" type="checkbox" checked>
+														<div class="toggle-switch"></div>
+													</label>
+												</td>
+											{% else %}
+												<td>
+													<label class="toggle">
+														<input class="toggle-checkbox active-btn" data-id="{{ provider.id }}" name="activated" type="checkbox">
+														<div class="toggle-switch"></div>
+													</label>
+												</td>
+											{% endif %}
+											{% if provider.deleted %}
+												<td>{{ provider.deleted |date("m/d/Y") }}</td>
+											{% else %}
+												<td id="deleted_date_{{ provider.id }}"></td>
+											{% endif %}
+											
+
+											<td class="td-actions">
+												<a href="/admin/provider/{{provider.id}}/edit" type="button" rel="tooltip" title="Modifier" class="btn btn-info btn-simple btn-xs">
+													<i class="fa fa-edit"></i>
+												</a>
+												{% if  provider.deleted is null %}
+													<a id="deleted_a_{{ provider.id }}" type="button" data-id="{{ provider.id }}" title="Supprimer" class="btn btn-danger btn-simple btn-xs deleted_btn">
+														<i class="fa fa-times"></i>
+													</a>
+
+
+												{% endif %}
+
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+
+							</table>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		{% endblock %}
